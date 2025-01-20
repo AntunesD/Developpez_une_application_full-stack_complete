@@ -1,17 +1,11 @@
 package com.openclassrooms.mddapi.service;
 
-import java.security.Key;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 @Service
 public class AuthService {
@@ -22,7 +16,8 @@ public class AuthService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  private final Key SECRET_KEY = Keys.hmacShaKeyFor("votre_clé_secrète_longue_et_sécurisée".getBytes());
+  @Autowired
+  private JwtService jwtService;
 
   public String authenticate(String username, String password) {
     User user = userRepository.findByUsername(username);
@@ -32,28 +27,7 @@ public class AuthService {
     if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new RuntimeException("Mot de passe incorrect");
     }
-    return generateToken(user);
-  }
-
-  private String generateToken(User user) {
-    try {
-      Date now = new Date();
-      Date expiryDate = new Date(System.currentTimeMillis() + 86400000);
-
-      String token = Jwts.builder()
-          .subject(user.getUsername())
-          .issuedAt(now)
-          .expiration(expiryDate)
-          .signWith(SECRET_KEY)
-          .compact();
-
-      return token;
-
-    } catch (Exception e) {
-      System.err.println("Erreur lors de la génération du token: " + e.getMessage());
-      e.printStackTrace();
-      throw new RuntimeException("Erreur lors de la génération du token", e);
-    }
+    return jwtService.generateToken(user);
   }
 
   public String register(String username, String password, String email) {
@@ -74,4 +48,5 @@ public class AuthService {
 
     return "Utilisateur enregistré avec succès"; // Message de succès
   }
+
 }
