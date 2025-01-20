@@ -1,5 +1,11 @@
 <div class="center">
   <img src="/assets/logo_p6.png" alt="logo" />
-  <h1>Welcome to MDD</h1>
-  <button mat-raised-button color="primary" (click)="start()">Commencer</button>
+  <h1 *ngIf="!showButtons">Welcome to MDD</h1>
+  <button *ngIf="!showButtons" mat-raised-button color="primary" (click)="start()">Commencer</button>
+  <div class="flex gap-12 flex-col md:flex-row " *ngIf="showButtons">
+    <button class="border-2 w-52 border-black rounded-lg p-2 px-6 font-semibold text-lg" (click)="login()">Se
+      connecter</button>
+    <button class="border-2 w-52 border-black rounded-lg p-2 px-6 font-semibold text-lg"
+      (click)="register()">S'inscrire</button>
+  </div>
 </div>
