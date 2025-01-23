@@ -1,11 +1,14 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.dto.ArticleDTO;
+import com.openclassrooms.mddapi.dto.UserSimpleDto;
 import com.openclassrooms.mddapi.entity.Article;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -37,5 +40,27 @@ public class ArticleService {
   public void deleteArticle(Long id) {
     Article article = getArticleById(id);
     articleRepository.delete(article);
+  }
+
+  public List<ArticleDTO> getAllArticlesDto() {
+    List<Article> articles = articleRepository.findAll();
+    return articles.stream()
+        .map(this::convertToDto)
+        .collect(Collectors.toList());
+  }
+
+  private ArticleDTO convertToDto(Article article) {
+    ArticleDTO dto = new ArticleDTO();
+    dto.setId(article.getId());
+    dto.setTitle(article.getTitle());
+    dto.setContent(article.getContent());
+    dto.setCreatedAt(article.getCreatedAt());
+
+    UserSimpleDto userDto = new UserSimpleDto();
+    userDto.setId(article.getUser().getId());
+    userDto.setUsername(article.getUser().getUsername());
+    dto.setUser(userDto);
+
+    return dto;
   }
 }

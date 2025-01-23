@@ -1,25 +1,31 @@
-<!-- Afficher le composant app-header uniquement sur les écrans de desktop -->
 <app-header *ngIf="isDesktop"></app-header>
 
-<!-- Ajouter une flèche pour revenir en arrière avec une icône -->
 <a href="/" class="flex items-center m-8">
   <i class="fas fa-arrow-left w-full text-4xl"></i>
 </a>
-<!-- Ajouter une image pour la version mobile -->
+
 <img src="../../../assets/logo_p6.png" alt="Header" class="block md:hidden" />
 
 <div class="flex flex-col items-center justify-center">
   <h1 class="text-2xl font-bold mb-4">Se connecter</h1>
-  <form class="flex flex-col gap-4 w-full p-8 md:w-auto items-center ">
+
+  <div *ngIf="errorMessage" class="text-red-500 mb-4">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 w-full p-8 md:w-auto items-center">
     <div>
       <label for="usernameOrEmail" class="block mb-1">E-mail ou nom d'utilisateur</label>
-      <input type="text" id="usernameOrEmail" name="usernameOrEmail" required
+      <input type="text" id="usernameOrEmail" formControlName="usernameOrEmail"
         class="p-2 border border-gray-300 rounded w-full" />
     </div>
     <div>
       <label for="password" class="block mb-1">Mot de passe</label>
-      <input type="password" id="password" name="password" required class="p-2 border border-gray-300 rounded w-full" />
+      <input type="password" id="password" formControlName="password"
+        class="p-2 border border-gray-300 rounded w-full" />
     </div>
-    <button type="submit" mat-raised-button color="primary" class="w-2/3">Se connecter</button>
+    <button type="submit" mat-raised-button color="primary" class="w-2/3" [disabled]="!loginForm.valid">
+      Se connecter
+    </button>
   </form>
 </div>

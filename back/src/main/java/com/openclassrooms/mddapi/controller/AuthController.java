@@ -1,11 +1,13 @@
 package com.openclassrooms.mddapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.openclassrooms.mddapi.dto.AuthResponseDto;
 import com.openclassrooms.mddapi.dto.LoginDto;
 import com.openclassrooms.mddapi.dto.RegisterDto;
 import com.openclassrooms.mddapi.service.AuthService;
@@ -18,20 +20,22 @@ public class AuthController {
   private AuthService authService;
 
   @PostMapping("/login")
-  public String login(@RequestBody LoginDto userDto) {
+  public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto userDto) {
     try {
-      return authService.authenticate(userDto.getUsername(), userDto.getPassword());
+      return ResponseEntity.ok(authService.authenticate(userDto.getUsernameOrEmail(), userDto.getPassword()));
     } catch (RuntimeException e) {
-      return e.getMessage();
+      return ResponseEntity.badRequest().body(
+          new AuthResponseDto("error", e.getMessage(), null, null));
     }
   }
 
   @PostMapping("/register")
-  public String register(@RequestBody RegisterDto userDto) {
+  public ResponseEntity<AuthResponseDto> register(@RequestBody RegisterDto userDto) {
     try {
-      return authService.register(userDto.getUsername(), userDto.getPassword(), userDto.getEmail());
+      return ResponseEntity.ok(authService.register(userDto.getUsername(), userDto.getPassword(), userDto.getEmail()));
     } catch (RuntimeException e) {
-      return e.getMessage();
+      return ResponseEntity.badRequest().body(
+          new AuthResponseDto("error", e.getMessage(), null, null));
     }
   }
 }

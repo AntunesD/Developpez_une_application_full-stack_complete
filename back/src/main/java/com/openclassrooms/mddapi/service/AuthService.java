@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.dto.AuthResponseDto;
 import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -19,34 +20,35 @@ public class AuthService {
   @Autowired
   private JwtService jwtService;
 
-  public String authenticate(String username, String password) {
-    User user = userRepository.findByUsername(username);
+  public AuthResponseDto authenticate(String usernameOrEmail, String password) {
+    User user = userRepository.findByUsername(usernameOrEmail);
     if (user == null) {
-      throw new RuntimeException("Nom d'utilisateur introuvable");
+      user = userRepository.findByEmail(usernameOrEmail);
+      if (user == null) {
+        throw new RuntimeException("Aucun compte trouvé avec cet identifiant ou email");
+      }
     }
     if (!passwordEncoder.matches(password, user.getPassword())) {
       throw new RuntimeException("Mot de passe incorrect");
     }
-    return jwtService.generateToken(user);
+    String token = jwtService.generateToken(user);
+    return new AuthResponseDto("success", "Connexion réussie", token, user.getUsername());
   }
 
-  public String register(String username, String password, String email) {
-
-    // Vérifier si l'utilisateur existe déjà
+  public AuthResponseDto register(String username, String password, String email) {
     if (userRepository.findByEmail(email) != null) {
       throw new RuntimeException("L'utilisateur existe déjà");
     }
 
-    // Créer un nouvel utilisateur
     User newUser = new User();
     newUser.setUsername(username);
-    newUser.setPassword(passwordEncoder.encode(password)); // Encoder le mot de passe
-    newUser.setEmail(email); // Ajouter l'email
+    newUser.setPassword(passwordEncoder.encode(password));
+    newUser.setEmail(email);
 
-    // Enregistrer l'utilisateur dans la base de données
     userRepository.save(newUser);
 
-    return "Utilisateur enregistré avec succès"; // Message de succès
+    String token = jwtService.generateToken(newUser);
+    return new AuthResponseDto("success", "Inscription réussie", token, username);
   }
 
 }

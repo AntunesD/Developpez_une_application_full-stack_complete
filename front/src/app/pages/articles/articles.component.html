@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<div class="container w-full px-4 py-8 flex flex-col items-center justify-between gap-2">
+  <button mat-raised-button color="primary" class="hover:brightness-125 transition-all duration-1000">Créer un
+    article</button>
+  <div>
+
+    <div class="relative inline-block">
+      <button (click)="toggleSortMenu()" type="button"
+        class="inline-flex items-center px-4 py-2 rounded-md hover:shadow-sm bg-white hover:bg-purple-200 transition-colors duration-400 ">
+        <span>Trier par</span>
+      </button>
+
+      <ul *ngIf="showSortMenu" class="absolute z-10 mt-1 w-56 rounded-md  hover:shadow-sm bg-white  ring-opacity-5">
+        <li *ngFor="let option of sortOptions" (click)="sortArticles(option.value); toggleSortMenu()"
+          class="cursor-pointer px-4 py-2 hover:bg-purple-200 transition-colors duration-400 flex items-center justify-between">
+          <span>{{ option.label }}</span>
+        </li>
+      </ul>
+    </div>
+    <button class="bg-white  rounded-md px-3 py-2 hover:bg-purple-200 transition-colors duration-400"
+      (click)="sortArticles(sortField)">
+      <i class="fas" [ngClass]="getSortIcon(sortField)"></i>
+    </button>
+  </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <article *ngFor="let article of articles"
+    class="bg-gray-100 rounded-lg shadow-md overflow-hidden hover:bg-gray-50 transition-colors duration-400">
+    <div class="p-6">
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ article.title }}</h2>
+      <div class="flex items-center text-sm text-gray-600 mb-4">
+        <span>{{ formatDate(article.createdAt) }}</span>
+        <span class="ml-4">Par {{ article.user.username }}</span>
+      </div>
+
+      <p class="text-gray-700 mb-4">{{ article.content }}</p>
+    </div>
+  </article>
+</div>
