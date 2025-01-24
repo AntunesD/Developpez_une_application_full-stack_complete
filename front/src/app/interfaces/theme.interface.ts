@@ -1,4 +1,4 @@
-export interface Themes {
+export interface Theme {
   id: number;
   title: string;
   description: string;

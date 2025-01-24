@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { Article } from '../../interfaces/article.interface';
-import { ArticleService } from 'src/app/services/article.service';
+import { ArticlesService } from 'src/app/services/articles.service';
 
 @Component({
   selector: 'app-articles',
@@ -11,7 +11,7 @@ export class ArticlesComponent {
   sortField: 'title' | 'createdAt' | 'username' = 'createdAt';
   sortDirection: 'asc' | 'desc' = 'desc';
 
-  constructor(private articleService: ArticleService) { }
+  constructor(private articleService: ArticlesService) { }
 
   ngOnInit(): void {
     this.loadArticles();

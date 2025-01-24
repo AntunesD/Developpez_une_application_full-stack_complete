@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Themes } from 'src/app/interfaces/themes.interface';
+import { Theme } from 'src/app/interfaces/theme.interface';
 import { ThemesService } from 'src/app/services/themes.services';
 
 @Component({
@@ -7,7 +7,7 @@ import { ThemesService } from 'src/app/services/themes.services';
   templateUrl: './themes.component.html'
 })
 export class ThemesComponent {
-  themes: Themes[] = [];
+  themes: Theme[] = [];
 
   constructor(private themesService: ThemesService) { }
 

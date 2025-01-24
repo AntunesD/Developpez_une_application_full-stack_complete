@@ -1,3 +1,6 @@
+import { comment } from "./comment.interface";
+import { Theme } from "./theme.interface";
+
 export interface User {
   id: number;
   username: string;
@@ -9,5 +12,6 @@ export interface Article {
   content: string;
   createdAt: string;
   user: User;
-  themeId: number | null;
+  theme: Theme;
+  comments: comment[];
 }

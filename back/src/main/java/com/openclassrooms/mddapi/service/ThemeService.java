@@ -1,14 +1,16 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.openclassrooms.mddapi.dto.ThemeDTO;
 import com.openclassrooms.mddapi.dto.ThemeRequestDto;
 import com.openclassrooms.mddapi.entity.Theme;
 import com.openclassrooms.mddapi.repository.ThemeRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

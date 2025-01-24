@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.Data;
 
@@ -8,8 +9,9 @@ import lombok.Data;
 public class ArticleDTO {
   private Long id;
   private String title;
-  private String content;
-  private LocalDate createdAt;
+  private ThemeDTO theme;
   private UserSimpleDto user;
-  private Long themeId;
+  private LocalDate createdAt;
+  private String content;
+  private List<CommentDTO> comments;
 }

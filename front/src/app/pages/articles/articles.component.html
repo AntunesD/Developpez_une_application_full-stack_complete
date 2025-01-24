@@ -26,7 +26,8 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   <article *ngFor="let article of articles"
-    class="bg-card rounded-lg shadow-md overflow-hidden hover:bg-gray-50 transition-colors duration-400">
+    class="bg-card rounded-lg shadow-md overflow-hidden hover:bg-gray-50 transition-colors duration-400"
+    [routerLink]="['/articles', article.id]">
     <div class="p-6">
       <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ article.title }}</h2>
       <div class="flex items-center text-sm text-gray-600 mb-4">

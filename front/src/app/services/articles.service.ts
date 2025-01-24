@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ArticleService {
+export class ArticlesService {
   private apiUrl = `${environment.apiUrl}/articles`;
 
   constructor(private http: HttpClient) { }
@@ -22,5 +22,10 @@ export class ArticleService {
 
   getArticles(): Observable<Article[]> {
     return this.http.get<Article[]>(this.apiUrl, { headers: this.getHeaders() });
+  }
+  // Nouvelle méthode pour obtenir un article par ID
+  getArticleById(id: number): Observable<Article> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Article>(url, { headers: this.getHeaders() });
   }
 }

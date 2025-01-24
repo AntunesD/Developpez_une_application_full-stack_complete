@@ -1,6 +1,8 @@
 package com.openclassrooms.mddapi.service;
 
 import com.openclassrooms.mddapi.dto.ArticleDTO;
+import com.openclassrooms.mddapi.dto.CommentDTO;
+import com.openclassrooms.mddapi.dto.ThemeDTO;
 import com.openclassrooms.mddapi.dto.UserSimpleDto;
 import com.openclassrooms.mddapi.entity.Article;
 import com.openclassrooms.mddapi.entity.User;
@@ -21,6 +23,12 @@ public class ArticleService {
   @Autowired
   private UserRepository userRepository; // Nécessaire pour associer un User à un Article
 
+  @Autowired
+  private CommentService commentService;
+
+  @Autowired
+  private ThemeService themeService;
+
   public List<ArticleDTO> getAllArticlesDto() {
     List<Article> articles = articleRepository.findAll();
     return articles.stream()
@@ -31,7 +39,18 @@ public class ArticleService {
   public ArticleDTO getArticleById(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Article non trouvé avec l'id : " + id));
-    return convertToDto(article);
+    // Récupérer et ajouter le thème associé à l'article
+    ThemeDTO themeDTO = themeService.getThemeById(article.getTheme().getId()); // Utilisation du ThemeService
+
+    // Récupérer les commentaires associés
+    List<CommentDTO> comments = commentService.getCommentsByArticleId(id);
+
+    // Convertir l'article en DTO et ajouter les commentaires
+    ArticleDTO articleDTO = convertToDto(article);
+    articleDTO.setTheme(themeDTO);
+    articleDTO.setComments(comments); // Ajouter la liste des commentaires au DTO
+
+    return articleDTO;
   }
 
   public ArticleDTO createArticle(ArticleDTO articleDTO) {

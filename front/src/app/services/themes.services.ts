@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Themes } from '../interfaces/themes.interface';
+import { Theme } from '../interfaces/theme.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class ThemesService {
     });
   }
 
-  getThemes(): Observable<Themes[]> {
-    return this.http.get<Themes[]>(this.apiUrl, { headers: this.getHeaders() });
+  getThemes(): Observable<Theme[]> {
+    return this.http.get<Theme[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 }
