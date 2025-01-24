@@ -24,7 +24,7 @@ public class ArticleService {
   private UserRepository userRepository; // Nécessaire pour associer un User à un Article
 
   @Autowired
-  private CommentService commentService;
+  private CommentsService commentService;
 
   @Autowired
   private ThemeService themeService;

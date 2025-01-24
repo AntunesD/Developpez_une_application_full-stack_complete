@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/interfaces/article.interface';
 import { ArticlesService } from 'src/app/services/articles.service';
+import { CommentsService } from 'src/app/services/comments.service';
 
 @Component({
   selector: 'app-article-id',
@@ -13,7 +14,8 @@ export class ArticleDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private articlesService: ArticlesService
+    private articlesService: ArticlesService,
+    private commentsService: CommentsService // Injection du service de commentaires
   ) { }
 
   ngOnInit(): void {
@@ -30,9 +32,16 @@ export class ArticleDetailsComponent implements OnInit {
 
   submitComment(): void {
     if (this.newComment.trim()) {
-      console.log('Nouveau commentaire :', this.newComment);
-      // Réinitialiser le champ après l'envoi
-      this.newComment = '';
+      this.commentsService.postComment(this.article.id, this.newComment).subscribe({
+        next: (response) => {
+          console.log('Commentaire envoyé avec succès :', response);
+          // Réinitialiser le champ après l'envoi
+          this.newComment = '';
+        },
+        error: (err) => {
+          console.error('Erreur lors de l\'envoi du commentaire :', err);
+        }
+      });
     } else {
       console.warn('Le commentaire est vide.');
     }
