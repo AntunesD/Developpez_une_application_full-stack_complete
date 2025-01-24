@@ -1,6 +1,31 @@
 <div class="w-full">
   <div class="flex items-center justify-between p-4">
     <img src="assets/logo_p6.png" alt="Logo" class="h-8">
+    <nav *ngIf="isLoggedIn()" class="ml-8">
+      <ul class="flex space-x-6">
+        <li>
+          <a routerLink="/articles"
+            [ngClass]="{'text-primary font-semibold': isActive('/articles'), 'hover:text-primary-light': !isActive('/articles')}"
+            class="transition-colors duration-200">
+            Articles
+          </a>
+        </li>
+        <li>
+          <a routerLink="/themes"
+            [ngClass]="{'text-primary font-semibold': isActive('/themes'), 'hover:text-primary-light': !isActive('/themes')}"
+            class="transition-colors duration-200">
+            Thèmes
+          </a>
+        </li>
+        <li>
+          <a routerLink="/profile"
+            [ngClass]="{'text-primary font-semibold': isActive('/profile'), 'hover:text-primary-light': !isActive('/profile')}"
+            class="transition-colors duration-200">
+            Profil
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
   <hr class="border-b-2">
 </div>

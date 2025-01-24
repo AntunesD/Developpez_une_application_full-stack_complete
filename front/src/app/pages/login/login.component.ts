@@ -38,7 +38,7 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           this.authService.saveToken(response.token);
-          this.router.navigate(['/article']); // Redirection vers la page d'accueil
+          this.router.navigate(['/articles']); // Redirection vers la page d'accueil
         },
         error: (error) => {
           this.errorMessage = 'Identifiants incorrects';
