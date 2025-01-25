@@ -1,14 +1,10 @@
 package com.openclassrooms.mddapi.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.dto.AuthResponseDto;
-import com.openclassrooms.mddapi.dto.UserProfilDTO;
 import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
@@ -53,23 +49,6 @@ public class AuthService {
 
     String token = jwtService.generateToken(newUser);
     return new AuthResponseDto("success", "Inscription réussie", token, username);
-  }
-
-  public UserProfilDTO getUserProfile(String username) {
-    User user = userRepository.findByUsername(username);
-    if (user == null) {
-      user = userRepository.findByUsername(username);
-      if (user == null) {
-        throw new RuntimeException("Utilisateur non trouvé");
-      }
-    }
-
-    // Mapper les thèmes en une liste de chaînes (par exemple, noms de thèmes)
-    List<String> themeNames = user.getThemes().stream()
-        .map(theme -> theme.getTitle())
-        .collect(Collectors.toList());
-
-    return new UserProfilDTO(user.getUsername(), user.getEmail(), themeNames);
   }
 
 }

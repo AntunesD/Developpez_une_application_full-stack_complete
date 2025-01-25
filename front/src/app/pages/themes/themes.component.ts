@@ -21,7 +21,7 @@ export class ThemesComponent {
         this.themes = themes;
       },
       error: (error) => {
-        console.error('Erreur lors du chargement des articles:', error);
+        console.error('Erreur lors du chargement des themes:', error);
       }
     });
   }

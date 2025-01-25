@@ -13,7 +13,6 @@ public class Theme {
 
   private String title;
   private String description;
-  private boolean isSubscribed; // Indique si l'utilisateur est abonné
 
   @OneToMany(mappedBy = "theme")
   private List<Article> articles;

@@ -10,6 +10,6 @@ import lombok.Data;
 public class UserProfilDTO {
   private String username;
   private String email;
-  private List<String> themes;
+  private List<ThemeDTO> themes;
 
 }

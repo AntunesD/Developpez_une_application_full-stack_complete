@@ -39,7 +39,6 @@ public class ThemeService {
     Theme theme = new Theme();
     theme.setTitle(themeRequestDto.getTitle());
     theme.setDescription(themeRequestDto.getDescription());
-    theme.setSubscribed(themeRequestDto.isSubscribed());
     Theme savedTheme = themeRepository.save(theme);
     return convertToDto(savedTheme);
   }
@@ -49,7 +48,6 @@ public class ThemeService {
         .orElseThrow(() -> new RuntimeException("Theme not found"));
     theme.setTitle(themeRequestDto.getTitle());
     theme.setDescription(themeRequestDto.getDescription());
-    theme.setSubscribed(themeRequestDto.isSubscribed());
     Theme updatedTheme = themeRepository.save(theme);
     return convertToDto(updatedTheme);
   }
@@ -63,7 +61,6 @@ public class ThemeService {
     dto.setId(theme.getId());
     dto.setTitle(theme.getTitle());
     dto.setDescription(theme.getDescription());
-    dto.setSubscribed(theme.isSubscribed());
     return dto;
   }
 }

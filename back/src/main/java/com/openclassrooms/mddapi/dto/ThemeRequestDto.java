@@ -6,5 +6,4 @@ import lombok.Data;
 public class ThemeRequestDto {
   private String title;
   private String description;
-  private boolean isSubscribed;
 }
