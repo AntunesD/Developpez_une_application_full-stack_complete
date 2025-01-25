@@ -24,6 +24,11 @@ public class ThemeService {
         .collect(Collectors.toList());
   }
 
+  public Theme getThemeEntityById(Long id) {
+    return themeRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Thème non trouvé avec l'id : " + id));
+  }
+
   public ThemeDTO getThemeById(Long id) {
     Theme theme = themeRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Theme not found"));

@@ -28,4 +28,9 @@ export class ArticlesService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Article>(url, { headers: this.getHeaders() });
   }
+
+  // Nouvelle méthode pour créer un article
+  createArticle(article: { title: string, content: string, theme: { id: string } }): Observable<Article> {
+    return this.http.post<Article>(this.apiUrl, article, { headers: this.getHeaders() });
+  }
 }

@@ -17,4 +17,7 @@ public class Theme {
 
   @OneToMany(mappedBy = "theme")
   private List<Article> articles;
+
+  @ManyToMany(mappedBy = "themes") // La relation est déjà définie dans User
+  private List<User> users;
 }

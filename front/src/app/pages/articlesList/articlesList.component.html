@@ -1,7 +1,8 @@
 <app-header></app-header>
 
 <div class="container w-full px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-2">
-  <button mat-raised-button class="bg-primary text-white hover:bg-primary-light transition-all duration-1000">Créer un
+  <button [routerLink]="['/articles/new']" mat-raised-button class=" bg-primary text-white hover:bg-primary-light
+    transition-all duration-1000">Créer un
     article</button>
   <div>
 
@@ -35,7 +36,9 @@
         <span class="ml-4">Par {{ article.user.username }}</span>
       </div>
 
-      <p class="text-gray-700 mb-4">{{ article.content }}</p>
+      <p class="text-gray-700 mb-4 h-24 overflow-hidden text-ellipsis line-clamp-5">
+        {{ article.content }}
+      </p>
     </div>
   </article>
 </div>

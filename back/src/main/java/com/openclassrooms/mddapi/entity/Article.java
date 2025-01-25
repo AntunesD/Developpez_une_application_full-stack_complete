@@ -14,6 +14,8 @@ public class Article {
 
   private String title;
   private LocalDate createdAt;
+
+  @Lob
   private String content;
 
   @ManyToOne

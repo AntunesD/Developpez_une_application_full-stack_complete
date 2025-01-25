@@ -21,4 +21,11 @@ public class User {
 
   @OneToMany(mappedBy = "user")
   private List<Comment> comments;
+
+  @ManyToMany
+  @JoinTable(name = "user_theme", // Nom de la table de jointure
+      joinColumns = @JoinColumn(name = "user_id"), // Clé étrangère pour l'utilisateur
+      inverseJoinColumns = @JoinColumn(name = "theme_id") // Clé étrangère pour le thème
+  )
+  private List<Theme> themes;
 }

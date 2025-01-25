@@ -10,12 +10,13 @@ import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ArticlesComponent } from './pages/articles/articles.component';
+import { ArticlesComponent } from './pages/articlesList/articlesList.component';
 import { ThemesComponent } from './pages/themes/themes.component';
-import { ArticleDetailsComponent } from './pages/articles/articleDetails/articleDetails.component';
+import { ArticleDetailsComponent } from './pages/articleDetails/articleDetails.component';
+import { ArticleFormComponent } from './pages/article-form/article-form.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, HeaderComponent, RegisterComponent, LoginComponent, ArticlesComponent, ThemesComponent, ArticleDetailsComponent],
+  declarations: [AppComponent, HomeComponent, HeaderComponent, RegisterComponent, LoginComponent, ArticlesComponent, ThemesComponent, ArticleDetailsComponent, ArticleFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

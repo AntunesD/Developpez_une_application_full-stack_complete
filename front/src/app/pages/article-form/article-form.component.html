@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<div class="max-w-4xl mx-auto my-8 p-4 flex items-start">
+
+  <button class="mr-4 p-2 rounded-full hover:bg-secondary transition-all duration-300" [routerLink]="['/articles']">
+    <i class="fas fa-arrow-left text-gray-700"></i>
+  </button>
+
+  <div class="max-w-lg mx-auto p-6 bg-white" *ngIf="!showSuccessMessage">
+    <h1 class="text-2xl font-bold text-primary mb-4">Créer un nouvel article</h1>
+
+    <!-- Sélectionner un thème -->
+    <div class="mb-4">
+      <select id="theme" [(ngModel)]="article.theme" #selectInput="ngModel"
+        [ngClass]="{'border-red-500': selectInput.touched && !article.theme}"
+        class="w-full border border-primary rounded-lg p-2 focus:outline-none focus:border-none  focus:ring-2  focus:ring-primary">
+        <option value="" disabled selected hidden>Choisir un thème...</option>
+        <option *ngFor="let theme of themes" [value]="theme.id">{{ theme.title }}</option>
+      </select>
+    </div>
+
+    <!-- Titre de l'article -->
+    <div class="mb-4">
+      <input id="title" type="text" [(ngModel)]="article.title" required
+        class="w-full border border-primary rounded-lg p-2 focus:outline-none focus:border-none  focus:ring-2  focus:ring-primary"
+        #titleInput="ngModel" [ngClass]="{'border-red-500': titleInput.touched && !article.title}"
+        placeholder="Entrez le titre de l'article">
+    </div>
+
+    <!-- Contenu de l'article -->
+    <div class="mb-4">
+      <textarea id="content" rows="6" [(ngModel)]="article.content"
+        class="w-full border border-primary focus:border-none rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+        #areaInput="ngModel" [ngClass]="{'border-red-500': areaInput.touched && !article.content}"
+        placeholder="Écrivez le contenu ici..."></textarea>
+    </div>
+
+    <!-- Bouton de création -->
+    <div class="text-center">
+      <button mat-raised-button (click)="createArticle()" class=" bg-primary text-white hover:bg-primary-light
+      transition-all duration-1000">
+        Créé
+      </button>
+    </div>
+  </div>
+
+  <!-- Message de succès -->
+  <div *ngIf="showSuccessMessage" class="max-w-lg mx-auto p-6 bg-white text-center">
+    <h2 class="text-2xl font-bold text-primary">Article créé avec succès !</h2>
+    <p class="text-lg text-gray-700 mt-2">Redirection vers la liste des articles...</p>
+  </div>
+
+</div>

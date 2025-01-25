@@ -4,7 +4,7 @@ import { ArticlesService } from 'src/app/services/articles.service';
 
 @Component({
   selector: 'app-articles',
-  templateUrl: './articles.component.html'
+  templateUrl: './articlesList.component.html'
 })
 export class ArticlesComponent {
   articles: Article[] = [];

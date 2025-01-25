@@ -5,12 +5,14 @@ import com.openclassrooms.mddapi.dto.CommentDTO;
 import com.openclassrooms.mddapi.dto.ThemeDTO;
 import com.openclassrooms.mddapi.dto.UserSimpleDto;
 import com.openclassrooms.mddapi.entity.Article;
+import com.openclassrooms.mddapi.entity.Theme;
 import com.openclassrooms.mddapi.entity.User;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,8 +55,15 @@ public class ArticleService {
     return articleDTO;
   }
 
-  public ArticleDTO createArticle(ArticleDTO articleDTO) {
-    Article article = convertToEntity(articleDTO);
+  public ArticleDTO createArticle(ArticleDTO articleDTO, String username) {
+    Article article = convertToEntity(articleDTO, username);
+
+    // Associer le thème si présent dans le DTO
+    if (articleDTO.getTheme() != null) {
+      Theme theme = themeService.getThemeEntityById(articleDTO.getTheme().getId());
+      article.setTheme(theme); // Associer le thème à l'article
+    }
+
     Article savedArticle = articleRepository.save(article);
     return convertToDto(savedArticle);
   }
@@ -94,7 +103,17 @@ public class ArticleService {
     dto.setId(article.getId());
     dto.setTitle(article.getTitle());
     dto.setContent(article.getContent());
-    // dto.setTheme(article.getTheme());
+
+    // Convertir Theme en ThemeDTO
+    if (article.getTheme() != null) {
+      ThemeDTO themeDto = new ThemeDTO();
+      themeDto.setId(article.getTheme().getId());
+      themeDto.setTitle(article.getTheme().getTitle());
+      themeDto.setDescription(article.getTheme().getDescription());
+      // Ajouter d'autres champs nécessaires de Theme vers ThemeDTO
+      dto.setTheme(themeDto);
+    }
+
     dto.setCreatedAt(article.getCreatedAt());
 
     UserSimpleDto userDto = new UserSimpleDto();
@@ -108,19 +127,32 @@ public class ArticleService {
   /**
    * Méthode pour convertir un DTO ArticleDTO en entité Article.
    */
-  private Article convertToEntity(ArticleDTO dto) {
+  private Article convertToEntity(ArticleDTO dto, String username) {
     Article article = new Article();
     article.setTitle(dto.getTitle());
     article.setContent(dto.getContent());
-    // article.setTheme(dto.getTheme());
 
-    // Associer un utilisateur si présent dans le DTO
-    if (dto.getUser() != null) {
-      User user = userRepository.findById(dto.getUser().getId())
-          .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec l'id : " + dto.getUser().getId()));
-      article.setUser(user);
+    // Vérifie l'existence de l'utilisateur
+    com.openclassrooms.mddapi.entity.User user = userRepository.findByUsername(username);
+    if (user == null) {
+      throw new RuntimeException("User not found");
     }
+
+    // Vérifie l'existence du thème
+    if (dto.getTheme() == null || dto.getTheme().getId() == null) {
+      throw new RuntimeException("Theme is required");
+    }
+    Theme theme = themeService.getThemeEntityById(dto.getTheme().getId());
+    if (theme == null) {
+      throw new RuntimeException("Theme not found with id: " + dto.getTheme().getId());
+    }
+
+    // Assigner les valeurs à l'article
+    article.setTheme(theme);
+    article.setUser(user);
+    article.setCreatedAt(LocalDate.now());
 
     return article;
   }
+
 }

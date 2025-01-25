@@ -12,10 +12,10 @@ export class ThemesComponent {
   constructor(private themesService: ThemesService) { }
 
   ngOnInit(): void {
-    this.loadArticles();
+    this.loadThemes();
   }
 
-  private loadArticles(): void {
+  private loadThemes(): void {
     this.themesService.getThemes().subscribe({
       next: (themes) => {
         this.themes = themes;
