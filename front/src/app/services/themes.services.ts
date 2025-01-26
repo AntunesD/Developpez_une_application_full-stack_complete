@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Theme } from '../interfaces/theme.interface';
 
+interface SubscribeResponse {
+  message: string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +26,12 @@ export class ThemesService {
 
   getThemes(): Observable<Theme[]> {
     return this.http.get<Theme[]>(this.apiUrl, { headers: this.getHeaders() });
+  }
+
+  subscribeToTheme(themeId: number): Observable<SubscribeResponse> {
+    const url = `${this.apiUrl}/subscribe`;
+    const body = { themeId };
+
+    return this.http.post<SubscribeResponse>(url, body, { headers: this.getHeaders() });
   }
 }

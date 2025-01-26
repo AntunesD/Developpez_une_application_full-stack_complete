@@ -1,9 +1,9 @@
 <app-header></app-header>
 
 <div class="container p-6">
-  <div class="bg-white flex flex-col items-center justify-center p-6 mb-8">
+  <div class="bg-white flex flex-col items-center justify-center p-2">
     <!-- Formulaire d'édition utilisateur -->
-    <h2 class="text-xl font-semibold mb-4">Profil utilisateur</h2>
+    <h1 class=" font-semibold mb-4">Profil utilisateur</h1>
     <form class="flex flex-col items-center justify-center">
       <div class="mb-4">
         <input id="username" [(ngModel)]="user.username" name="username" type="text"
@@ -20,15 +20,16 @@
         Sauvegarder
       </button>
     </form>
-  </div>
+    <!-- Lien de déconnexion -->
 
-  <!-- Liste des thèmes -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div *ngFor="let theme of user.themes" class="bg-card rounded-lg shadow-md p-4 border">
-      <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ theme.title }}</h3>
-      <p class="text-gray-600 mb-4">{{ theme.description }}</p>
-    </div>
   </div>
+  <p (click)="logout()" class="text-red-600 cursor-pointer font-semibold text-center">Se déconnecter</p>
+
+  <!-- Separator -->
+  <hr class="my-8 border-black">
+  <!-- Liste des thèmes -->
+  <h2 class="text-xl font-semibold mb-4 text-center">Abonnements</h2>
+  <app-theme-card [themes]="user.themes"></app-theme-card>
 
   <!-- Modale de succès ou d'erreur -->
   <div *ngIf="message" (click)="closeModal()"

@@ -4,7 +4,7 @@ import { ThemesService } from 'src/app/services/themes.services';
 
 @Component({
   selector: 'app-themes',
-  templateUrl: './themes.component.html'
+  templateUrl: './themesList.component.html'
 })
 export class ThemesComponent {
   themes: Theme[] = [];
@@ -24,13 +24,6 @@ export class ThemesComponent {
         console.error('Erreur lors du chargement des themes:', error);
       }
     });
-  }
-
-  toggleSubscription(themesId: number): void {
-    const course = this.themes.find(c => c.id === themesId);
-    if (course) {
-      course.subscribed = !course.subscribed;
-    }
   }
 
 }

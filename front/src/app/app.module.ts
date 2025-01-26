@@ -11,13 +11,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ArticlesComponent } from './pages/articlesList/articlesList.component';
-import { ThemesComponent } from './pages/themes/themes.component';
+import { ThemesComponent } from './pages/themesList/themesList.component';
 import { ArticleDetailsComponent } from './pages/articleDetails/articleDetails.component';
 import { ArticleFormComponent } from './pages/article-form/article-form.component';
 import { ProfilComponent } from './pages/profil/profil.component';
+import { ThemeCardComponent } from './components/theme-card/theme-card.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, HeaderComponent, RegisterComponent, LoginComponent, ArticlesComponent, ThemesComponent, ArticleDetailsComponent, ArticleFormComponent, ProfilComponent],
+  declarations: [AppComponent, HomeComponent, HeaderComponent, RegisterComponent, LoginComponent, ArticlesComponent, ThemesComponent, ArticleDetailsComponent, ArticleFormComponent, ProfilComponent, ThemeCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

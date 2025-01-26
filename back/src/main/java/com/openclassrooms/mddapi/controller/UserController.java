@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.mddapi.dto.UserProfilDTO;
 import com.openclassrooms.mddapi.dto.AuthResponseDto;
 import com.openclassrooms.mddapi.dto.UserDTO;
+import com.openclassrooms.mddapi.dto.UserProfilDTO;
 import com.openclassrooms.mddapi.service.UserService;
 
 @RestController
@@ -44,4 +44,5 @@ public class UserController {
       return ResponseEntity.badRequest().body(null);
     }
   }
+
 }

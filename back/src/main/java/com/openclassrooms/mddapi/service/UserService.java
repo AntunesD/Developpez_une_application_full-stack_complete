@@ -38,6 +38,7 @@ public class UserService {
           dto.setId(theme.getId());
           dto.setTitle(theme.getTitle());
           dto.setDescription(theme.getDescription());
+          dto.setSubscribed(true);
           return dto;
         })
         .collect(Collectors.toList());

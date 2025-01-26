@@ -1,13 +1,17 @@
 package com.openclassrooms.mddapi.controller;
 
+import com.openclassrooms.mddapi.dto.SubscribeRequestDTO;
 import com.openclassrooms.mddapi.dto.ThemeDTO;
 import com.openclassrooms.mddapi.dto.ThemeRequestDto;
 import com.openclassrooms.mddapi.service.ThemeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/themes")
@@ -18,8 +22,9 @@ public class ThemeController {
 
   // Récupérer tous les thèmes
   @GetMapping
-  public ResponseEntity<List<ThemeDTO>> getAllThemes() {
-    List<ThemeDTO> themes = themeService.getAllThemes();
+  public ResponseEntity<List<ThemeDTO>> getAllThemes(Authentication authentication) {
+    String username = authentication.getName();
+    List<ThemeDTO> themes = themeService.getAllThemes(username);
     return ResponseEntity.ok(themes);
   }
 
@@ -50,4 +55,22 @@ public class ThemeController {
     themeService.deleteTheme(id);
     return ResponseEntity.noContent().build();
   }
+
+  @PostMapping("/subscribe")
+  public ResponseEntity<Map<String, String>> subscribeToTheme(@RequestBody SubscribeRequestDTO requestDTO,
+      Authentication authentication) {
+    String username = authentication.getName();
+    try {
+      String resultMessage = themeService.subscribeToTheme(username, requestDTO.getThemeId());
+      // Emballer le message dans une réponse JSON
+      Map<String, String> response = new HashMap<>();
+      response.put("message", resultMessage);
+      return ResponseEntity.ok(response);
+    } catch (RuntimeException e) {
+      Map<String, String> errorResponse = new HashMap<>();
+      errorResponse.put("error", e.getMessage());
+      return ResponseEntity.badRequest().body(errorResponse);
+    }
+  }
+
 }

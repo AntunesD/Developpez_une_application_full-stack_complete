@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+// Assurez-vous d'importer AuthService
 
 @Component({
   selector: 'app-home',
@@ -9,12 +11,18 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   showButtons: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void { }
 
   start() {
-    this.showButtons = true;
+    if (this.authService.isLoggedIn()) {
+      // Si l'utilisateur est connecté, redirige vers /articles
+      this.router.navigate(['/articles']);
+    } else {
+      // Sinon, affiche les boutons d'inscription et de connexion
+      this.showButtons = true;
+    }
   }
 
   login() {

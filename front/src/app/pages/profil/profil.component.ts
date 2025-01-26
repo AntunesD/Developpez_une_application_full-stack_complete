@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Profil } from 'src/app/interfaces/profil.interface';
 import { AuthResponse } from 'src/app/models/auth-response.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,7 +20,7 @@ export class ProfilComponent implements OnInit {
   message: string = ''; // Pour stocker le message à afficher
   messageType: 'success' | 'error' = 'success'; // Pour gérer le type du message
 
-  constructor(private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadThemes();
@@ -73,5 +74,12 @@ export class ProfilComponent implements OnInit {
   // Fonction pour fermer la modale manuellement
   closeModal(): void {
     this.message = ''; // Réinitialiser le message immédiatement
+  }
+
+  // Méthode pour déconnecter l'utilisateur
+  logout(): void {
+    this.authService.logout();
+    console.log('Utilisateur déconnecté');
+    this.router.navigate(['']);
   }
 }
