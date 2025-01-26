@@ -2,16 +2,25 @@
 
 <div class="max-w-4xl mx-auto my-8 p-4 flex items-start">
 
-  <button class="mr-4 p-2 rounded-full hover:bg-secondary transition-all duration-300" [routerLink]="['/articles']">
+  <button class="mr-4 p-2 rounded-full hidden md:block hover:bg-secondary transition-all duration-300"
+    [routerLink]="['/articles']">
     <i class="fas fa-arrow-left text-gray-700"></i>
   </button>
   <div class="w-full">
     <!-- Article -->
     <div class="mb-6">
-      <h1 class="text-3xl font-extrabold text-gray-800">{{ article.title }}</h1>
-      <div class="flex text-sm w-1/2 justify-between items-center text-gray-500">
-        <p>{{ article.createdAt | date }}</p>
-        <p>{{ article.user.username }}</p>
+      <div class="flex items-center justify-center">
+        <button class="mr-4 p-2 rounded-full md:hidden hover:bg-secondary transition-all duration-300"
+          [routerLink]="['/articles']">
+          <i class="fas fa-arrow-left text-gray-700"></i>
+        </button>
+        <h1 class="text-3xl font-extrabold text-gray-800">{{ article.title }}</h1>
+      </div>
+      <div class="flex flex-col md:flex-row text-sm md:w-1/2 gap-6 md:items-center text-gray-500">
+        <div class="flex gap-6">
+          <p>{{ article.createdAt | date }}</p>
+          <p>{{ article.user.username }}</p>
+        </div>
         <p>{{ article.theme.title }}</p>
       </div>
       <div class="text-lg my-10 text-gray-700">{{ article.content }}</div>
@@ -23,11 +32,12 @@
 
     <!-- Comments Section -->
     <h3 class="text-xl font-semibold text-gray-800 mb-4">Commentaires</h3>
-    <div class=" pl-10 rounded-md">
+    <div class=" md:pl-10 ">
 
-      <div *ngFor="let comment of article.comments" class="mb-4 border-b pb-4 flex items-center justify-between">
-        <p class="text-sm w-1/3">{{ comment.username }}</p>
-        <div class="text-md text-gray-700 mt-1 bg-card rounded-lg w-2/3 p-4 pb-10">{{ comment.content }}</div>
+      <div *ngFor="let comment of article.comments"
+        class="mb-4 border-b pb-4 flex flex-col-reverse md:flex-row items-center justify-between">
+        <p class="text-sm md:w-1/3 w-full text-end md:text-start">{{ comment.username }}</p>
+        <div class="text-md text-gray-700 mt-1 bg-card rounded-lg md:w-2/3 w-full p-4 pb-10">{{ comment.content }}</div>
       </div>
       <!-- Input Section for Comments -->
       <div class="mt-6 flex items-center">

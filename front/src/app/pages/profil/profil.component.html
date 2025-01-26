@@ -1,16 +1,16 @@
 <app-header></app-header>
 
-<div class="container p-6">
-  <div class="bg-white flex flex-col items-center justify-center p-2">
+<div class="container p-2">
+  <div class="bg-white flex flex-col w-full items-center justify-center p-2">
     <!-- Formulaire d'édition utilisateur -->
     <h1 class=" font-semibold mb-4">Profil utilisateur</h1>
-    <form class="flex flex-col items-center justify-center">
-      <div class="mb-4">
+    <form class="flex flex-col items-center w-full justify-center">
+      <div class="mb-4 w-full md:w-auto">
         <input id="username" [(ngModel)]="user.username" name="username" type="text"
           class="w-full border border-primary focus:border-none rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary resize-none" />
       </div>
 
-      <div class="mb-4">
+      <div class="mb-4  w-full md:w-auto">
         <input id="email" [(ngModel)]="user.email" name="email" type="email"
           class="w-full border border-primary focus:border-none rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-primary resize-none" />
       </div>
@@ -28,7 +28,7 @@
   <!-- Separator -->
   <hr class="my-8 border-black">
   <!-- Liste des thèmes -->
-  <h2 class="text-xl font-semibold mb-4 text-center">Abonnements</h2>
+  <h2 class="text-xl font-semibold mb-4 text-center hidden md:block">Abonnements</h2>
   <app-theme-card [themes]="user.themes"></app-theme-card>
 
   <!-- Modale de succès ou d'erreur -->

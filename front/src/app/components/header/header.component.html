@@ -1,7 +1,13 @@
 <div class="w-full">
   <div class="flex items-center justify-between p-4">
     <img routerLink="" src="assets/logo_p6.png" alt="Logo" class="h-8 cursor-pointer">
-    <nav *ngIf="isLoggedIn()" class="ml-8">
+
+    <!-- Icône burger pour mobile -->
+    <button (click)="toggleSidebar()" class="lg:hidden p-2 text-gray-600">
+      <i class="fa fa-bars fa-2x transition-transform duration-300" [ngClass]="{'rotate-180': sidebarOpen}"></i>
+    </button>
+
+    <nav class="ml-8 hidden lg:block">
       <ul class="flex space-x-6 items-center justify-center">
         <li>
           <a routerLink="/articles"
@@ -31,4 +37,42 @@
     </nav>
   </div>
   <hr class="border-b-2">
+
+  <!-- Sidebar mobile -->
+  <div [ngClass]="{'translate-x-0': sidebarOpen, 'translate-x-full': !sidebarOpen}"
+    class="fixed inset-0 bg-gray-800 bg-opacity-0 z-50 flex lg:hidden transition-transform duration-500 ease-in-out">
+    <div class="bg-white w-3/4 h-full p-6 transform transition-all text-end duration-500 ease-in-out ml-auto">
+      <button (click)="toggleSidebar()" class="text-2xl text-gray-600">
+        <i class="fa fa-times"></i>
+      </button>
+      <ul class="space-y-4 pb-10 h-full flex flex-col justify-between items-end">
+        <ul>
+          <li>
+            <a routerLink="/articles"
+              [ngClass]="{'text-primary font-semibold': isActive('/articles'), 'hover:text-primary-light': !isActive('/articles')}"
+              class="block text-gray-800 text-2xl transition-colors duration-200">
+              Articles
+            </a>
+          </li>
+          <li>
+            <a routerLink="/themes"
+              [ngClass]="{'text-primary font-semibold': isActive('/themes'), 'hover:text-primary-light': !isActive('/themes')}"
+              class="block text-gray-800 text-2xl transition-colors duration-200">
+              Thèmes
+            </a>
+          </li>
+        </ul>
+        <li>
+          <a routerLink="/profil">
+            <div
+              [ngClass]="{'ring ring-primary': isActive('/profil'), 'hover:ring hover:ring-primary-light': !isActive('/profil')}"
+              class="transition-colors duration-200 rounded-full w-12 h-12 bg-gray-200 p-2 flex items-center justify-center group">
+              <i [ngClass]="{'text-primary': isActive('/profil'), 'group-hover:text-primary-light': !isActive('/profil')}"
+                class="fa-regular fa-user fa-2x text-gray-500"></i>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

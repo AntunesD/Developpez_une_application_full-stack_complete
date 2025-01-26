@@ -11,6 +11,7 @@ export class ArticlesComponent {
   sortField: 'title' | 'createdAt' | 'username' = 'createdAt';
   sortDirection: 'asc' | 'desc' = 'desc';
 
+
   constructor(private articleService: ArticlesService) { }
 
   ngOnInit(): void {
