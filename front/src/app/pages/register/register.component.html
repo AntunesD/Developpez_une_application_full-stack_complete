@@ -1,29 +1,49 @@
-<!-- Afficher le composant app-header uniquement sur les écrans de desktop -->
 <app-header *ngIf="isDesktop"></app-header>
 
-
-<!-- Ajouter une flèche pour revenir en arrière avec une icône -->
 <a href="/" class="flex items-center m-8">
   <i class="fas fa-arrow-left w-full text-4xl"></i>
 </a>
-<!-- Ajouter une image pour la version mobile -->
+
 <img src="../../../assets/logo_p6.png" alt="Header" class="block md:hidden" />
 
 <div class="flex flex-col items-center justify-center">
   <h1 class="text-2xl font-bold mb-4">Inscription</h1>
-  <form class="flex flex-col gap-4 w-full p-4 md:w-auto items-center ">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-4 w-full p-4 md:w-auto items-center">
     <div class="w-full md:w-auto">
       <label for="username" class="block mb-1">Nom d'utilisateur</label>
-      <input type="text" id="username" name="username" required class="p-2 border border-gray-300 rounded w-full" />
+      <input type="text" id="username" formControlName="username" required
+        class="p-2 border border-gray-300 rounded w-full" />
     </div>
     <div class="w-full md:w-auto">
       <label for="email" class="block mb-1">Adresse e-mail</label>
-      <input type="email" id="email" name="email" required class="p-2 border border-gray-300 rounded w-full" />
+      <input type="email" id="email" formControlName="email" required
+        class="p-2 border border-gray-300 rounded w-full" />
     </div>
     <div class="w-full md:w-auto">
       <label for="password" class="block mb-1">Mot de passe</label>
-      <input type="password" id="password" name="password" required class="p-2 border border-gray-300 rounded w-full" />
+      <input type="password" id="password" formControlName="password" required
+        class="p-2 border border-gray-300 rounded w-full" />
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+        class="text-red-500 text-sm">
+        <div *ngIf="registerForm.get('password')?.errors?.['minLength']">
+          Le mot de passe doit comporter au moins 8 caractères.
+        </div>
+        <div *ngIf="registerForm.get('password')?.errors?.['number']">
+          Le mot de passe doit contenir au moins un chiffre.
+        </div>
+        <div *ngIf="registerForm.get('password')?.errors?.['lowercase']">
+          Le mot de passe doit contenir au moins une lettre minuscule.
+        </div>
+        <div *ngIf="registerForm.get('password')?.errors?.['uppercase']">
+          Le mot de passe doit contenir au moins une lettre majuscule.
+        </div>
+        <div *ngIf="registerForm.get('password')?.errors?.['special']">
+          Le mot de passe doit contenir au moins un caractère spécial.
+        </div>
+      </div>
     </div>
-    <button type="submit" mat-raised-button color="primary" class="w-2/3">S'inscrire</button>
+    <button type="submit" [disabled]="registerForm.invalid" mat-raised-button color="primary"
+      class="w-2/3">S'inscrire</button>
   </form>
 </div>
