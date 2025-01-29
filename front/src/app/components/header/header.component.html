@@ -1,13 +1,13 @@
 <div class="w-full">
   <div class="flex items-center justify-between p-4">
-    <img routerLink="" src="assets/logo_p6.png" alt="Logo" class="h-8 cursor-pointer">
+    <img routerLink="" src="assets/logo_p6.png" alt="Logo" class="h-12 cursor-pointer">
 
     <!-- Icône burger pour mobile -->
-    <button (click)="toggleSidebar()" class="lg:hidden p-2 text-gray-600">
+    <button *ngIf="isLoggedIn()" (click)="toggleSidebar()" class="lg:hidden p-2 text-gray-600">
       <i class="fa fa-bars fa-2x transition-transform duration-300" [ngClass]="{'rotate-180': sidebarOpen}"></i>
     </button>
 
-    <nav class="ml-8 hidden lg:block">
+    <nav *ngIf="isLoggedIn()" class="ml-8 hidden lg:block">
       <ul class="flex space-x-6 items-center justify-center">
         <li>
           <a routerLink="/articles"

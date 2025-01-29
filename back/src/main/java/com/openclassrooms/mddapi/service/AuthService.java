@@ -54,7 +54,10 @@ public class AuthService {
    */
   public AuthResponseDto register(String username, String password, String email) {
     if (userRepository.findByEmail(email) != null) {
-      throw new RuntimeException("L'utilisateur existe déjà");
+      throw new RuntimeException("L'email existe déjà");
+    }
+    if (userRepository.findByUsername(username) != null) {
+      throw new RuntimeException("Le nom d'utilisateur est déjà pris");
     }
 
     // Création d'un nouvel utilisateur

@@ -24,26 +24,33 @@
       <label for="password" class="block mb-1">Mot de passe</label>
       <input type="password" id="password" formControlName="password" required
         class="p-2 border border-gray-300 rounded w-full" />
-      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
-        class="text-red-500 text-sm">
-        <div *ngIf="registerForm.get('password')?.errors?.['minLength']">
-          Le mot de passe doit comporter au moins 8 caractères.
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['number']">
-          Le mot de passe doit contenir au moins un chiffre.
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['lowercase']">
-          Le mot de passe doit contenir au moins une lettre minuscule.
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['uppercase']">
-          Le mot de passe doit contenir au moins une lettre majuscule.
-        </div>
-        <div *ngIf="registerForm.get('password')?.errors?.['special']">
-          Le mot de passe doit contenir au moins un caractère spécial.
-        </div>
+    </div>
+    <div class="text-red-500 text-sm">
+      <div *ngIf="registerForm.get('password')?.errors?.['minLength']">
+        Le mot de passe doit comporter au moins 8 caractères.
+      </div>
+      <div *ngIf="registerForm.get('password')?.errors?.['number']">
+        Le mot de passe doit contenir au moins un chiffre.
+      </div>
+      <div *ngIf="registerForm.get('password')?.errors?.['lowercase']">
+        Le mot de passe doit contenir au moins une lettre minuscule.
+      </div>
+      <div *ngIf="registerForm.get('password')?.errors?.['uppercase']">
+        Le mot de passe doit contenir au moins une lettre majuscule.
+      </div>
+      <div *ngIf="registerForm.get('password')?.errors?.['special']">
+        Le mot de passe doit contenir au moins un caractère spécial.
       </div>
     </div>
-    <button type="submit" [disabled]="registerForm.invalid" mat-raised-button color="primary"
-      class="w-2/3">S'inscrire</button>
+
+    <!-- Message d'erreur sous le formulaire -->
+    <p *ngIf="errorMessage" class="text-red-500 mt-2">
+      {{ errorMessage }}
+    </p>
+
+    <button type="submit" [disabled]="registerForm.invalid" mat-raised-button color="primary" class="w-2/3">
+      S'inscrire
+    </button>
+
   </form>
 </div>

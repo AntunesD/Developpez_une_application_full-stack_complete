@@ -24,6 +24,10 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, loginRequest);
   }
 
+  register(registerRequest: { username: string; email: string; password: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, registerRequest);
+  }
+
   saveToken(token: string): void {
     localStorage.setItem('token', token);
     this.isAuthenticated = true; // On met à jour l'état d'authentification
