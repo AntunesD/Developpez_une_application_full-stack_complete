@@ -24,10 +24,12 @@ export class ThemesService {
     });
   }
 
+  // Méthode pour récupérer les thèmes
   getThemes(): Observable<Theme[]> {
     return this.http.get<Theme[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
+  // Méthode pour s'abonner à un thème
   subscribeToTheme(themeId: number): Observable<SubscribeResponse> {
     const url = `${this.apiUrl}/subscribe`;
     const body = { themeId };

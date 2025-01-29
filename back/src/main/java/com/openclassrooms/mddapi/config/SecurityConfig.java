@@ -23,6 +23,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.openclassrooms.mddapi.security.JwtAuthenticationFilter;
 import com.openclassrooms.mddapi.service.JwtService;
 
+/**
+ * Configuration de la sécurité de l'application.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -33,6 +36,9 @@ public class SecurityConfig {
   @Autowired
   private JwtService jwtService;
 
+  /**
+   * Définit la chaîne de filtres de sécurité HTTP.
+   */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -45,6 +51,9 @@ public class SecurityConfig {
     return http.build();
   }
 
+  /**
+   * Configuration CORS pour autoriser les requêtes entre domaines.
+   */
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
@@ -58,11 +67,17 @@ public class SecurityConfig {
     return source;
   }
 
+  /**
+   * Encodeur de mot de passe utilisant BCrypt.
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Configuration de l'authentification en mémoire.
+   */
   @Bean
   @Primary
   public AuthenticationManagerBuilder configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -71,6 +86,9 @@ public class SecurityConfig {
     return auth;
   }
 
+  /**
+   * Fournisseur d'authentification basé sur DAO.
+   */
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -79,6 +97,9 @@ public class SecurityConfig {
     return provider;
   }
 
+  /**
+   * Filtre d'authentification JWT.
+   */
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
     return new JwtAuthenticationFilter(jwtService, userDetailsService);

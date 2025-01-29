@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
-  // Variable pour gérer l'état de la sidebar (ouverte ou fermée)
   sidebarOpen = false;
   isTransitioning = false;
 
@@ -18,7 +17,7 @@ export class HeaderComponent {
     return this.router.url === route;
   }
 
-  // Utiliser la méthode isLoggedIn du AuthService pour vérifier l'authentification
+  // Méthode pour vérifier l'authentification
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }

@@ -26,7 +26,12 @@ public class CommentsService {
   @Autowired
   private UserRepository userRepository;
 
-  // Méthode pour récupérer les commentaires associés à un article
+  /**
+   * Récupère tous les commentaires associés à un article.
+   * 
+   * @param articleId ID de l'article
+   * @return Liste de CommentDTO
+   */
   public List<CommentDTO> getCommentsByArticleId(Long articleId) {
     List<Comment> comments = commentsRepository.findByArticleId(articleId);
     return comments.stream()
@@ -34,7 +39,13 @@ public class CommentsService {
         .collect(Collectors.toList());
   }
 
-  // Méthode pour ajouter un commentaire
+  /**
+   * Crée un nouveau commentaire pour un article.
+   * 
+   * @param commentDTO Contient les données du commentaire
+   * @param username   Nom d'utilisateur de l'auteur du commentaire
+   * @return CommentDTO
+   */
   public CommentDTO createComment(CommentDTO commentDTO, String username) {
     Comment comment = new Comment();
 
@@ -57,7 +68,13 @@ public class CommentsService {
     return convertToCommentDto(savedComment);
   }
 
-  // Méthode pour mettre à jour un commentaire
+  /**
+   * Met à jour un commentaire existant.
+   * 
+   * @param commentId  ID du commentaire à mettre à jour
+   * @param commentDTO Nouveau contenu du commentaire
+   * @return CommentDTO mis à jour
+   */
   public CommentDTO updateComment(Long commentId, CommentDTO commentDTO) {
     Comment comment = commentsRepository.findById(commentId)
         .orElseThrow(() -> new RuntimeException("Comment not found"));
@@ -67,14 +84,23 @@ public class CommentsService {
     return convertToCommentDto(updatedComment);
   }
 
-  // Méthode pour supprimer un commentaire
+  /**
+   * Supprime un commentaire.
+   * 
+   * @param commentId ID du commentaire à supprimer
+   */
   public void deleteComment(Long commentId) {
     Comment comment = commentsRepository.findById(commentId)
         .orElseThrow(() -> new RuntimeException("Comment not found"));
     commentsRepository.delete(comment);
   }
 
-  // Méthode de conversion d'un Comment en CommentDTO
+  /**
+   * Convertit un objet Comment en CommentDTO.
+   * 
+   * @param comment Comment à convertir
+   * @return CommentDTO
+   */
   private CommentDTO convertToCommentDto(Comment comment) {
     CommentDTO dto = new CommentDTO();
     dto.setArticleId(comment.getArticle().getId());

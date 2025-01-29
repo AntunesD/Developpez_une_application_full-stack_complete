@@ -24,15 +24,18 @@ export class LoginComponent {
     });
   }
 
+  // Méthode pour écouter le redimensionnement de la fenêtre
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.checkScreenSize();
   }
 
+  // Méthode pour vérifier la taille de l'écran
   checkScreenSize() {
     this.isDesktop = window.innerWidth >= 768;
   }
 
+  // Méthode pour soumettre le formulaire de connexion
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({

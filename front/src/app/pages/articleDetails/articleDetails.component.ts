@@ -10,16 +10,16 @@ import { CommentsService } from 'src/app/services/comments.service';
 })
 export class ArticleDetailsComponent implements OnInit {
   article!: Article;
-  newComment: string = ''; // Nouveau champ pour le commentaire
+  newComment: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private articlesService: ArticlesService,
-    private commentsService: CommentsService // Injection du service de commentaires
+    private commentsService: CommentsService
   ) { }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id')); // Récupère l'ID depuis l'URL
+    const id = Number(this.route.snapshot.paramMap.get('id')); // Récupérer l'id de l'article depuis l'URL
     this.articlesService.getArticleById(id).subscribe({
       next: (data) => {
         this.article = data;
@@ -30,6 +30,7 @@ export class ArticleDetailsComponent implements OnInit {
     });
   }
 
+  // Méthode pour soumettre un commentaire
   submitComment(): void {
     if (this.newComment.trim()) {
       this.commentsService.postComment(this.article.id, this.newComment).subscribe({

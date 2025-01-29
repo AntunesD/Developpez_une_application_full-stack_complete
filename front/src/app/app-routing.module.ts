@@ -20,7 +20,10 @@ const routes: Routes = [
   { path: 'articles/new', component: ArticleFormComponent, canActivate: [AuthGuard] },
   { path: 'articles/:id', component: ArticleDetailsComponent, canActivate: [AuthGuard] },
   { path: 'themes', component: ThemesComponent, canActivate: [AuthGuard] },
-  { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] }
+  { path: 'profil', component: ProfilComponent, canActivate: [AuthGuard] },
+
+  // Route pour rediriger les chemins inconnus
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

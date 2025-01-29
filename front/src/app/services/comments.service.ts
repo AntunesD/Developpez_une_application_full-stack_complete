@@ -19,6 +19,7 @@ export class CommentsService {
     });
   }
 
+  // Méthode pour poster un commentaire
   postComment(articleId: number, content: string): Observable<CommentResponse> {
     const payload = {
       articleId,

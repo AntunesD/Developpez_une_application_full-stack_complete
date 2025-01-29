@@ -18,6 +18,7 @@ export class ArticlesComponent {
     this.loadArticles();
   }
 
+  // Méthode pour charger les articles
   private loadArticles(): void {
     this.articleService.getArticles().subscribe({
       next: (articles) => {
@@ -31,6 +32,7 @@ export class ArticlesComponent {
     });
   }
 
+  // Méthode pour formater la date
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('fr-FR', {
       year: 'numeric',
@@ -39,6 +41,7 @@ export class ArticlesComponent {
     });
   }
 
+  // Méthode pour trier les articles
   sortArticles(field: 'title' | 'createdAt' | 'username'): void {
 
     if (this.sortField === field) {
@@ -67,6 +70,7 @@ export class ArticlesComponent {
 
   }
 
+  // Méthode pour obtenir l'icône de tri
   getSortIcon(field: 'title' | 'createdAt' | 'username'): string {
     if (this.sortField !== field) return 'fa-sort';
     return this.sortDirection === 'asc' ? 'fa-arrow-up' : 'fa-arrow-down';
@@ -80,6 +84,7 @@ export class ArticlesComponent {
     { label: 'Auteur', value: 'username' as const }
   ];
 
+  // Méthode pour basculer le menu de tri
   toggleSortMenu(): void {
     this.showSortMenu = !this.showSortMenu;
   }

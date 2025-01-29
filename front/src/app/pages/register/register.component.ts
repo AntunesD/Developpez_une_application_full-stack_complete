@@ -14,15 +14,18 @@ export class RegisterComponent {
     this.createForm();
   }
 
+  // Méthode pour écouter le redimensionnement de la fenêtre
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.checkScreenSize();
   }
 
+  // Méthode pour vérifier la taille de l'écran
   checkScreenSize() {
     this.isDesktop = window.innerWidth >= 768; // Ajustez la largeur selon vos besoins
   }
 
+  // Méthode pour créer le formulaire
   createForm() {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],

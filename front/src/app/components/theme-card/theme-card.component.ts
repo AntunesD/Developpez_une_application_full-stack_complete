@@ -6,10 +6,12 @@ import { ThemesService } from 'src/app/services/themes.services';
   templateUrl: './theme-card.component.html'
 })
 export class ThemeCardComponent {
+
   @Input() themes: { id: number; title: string; description: string; subscribed: boolean }[] = [];
 
   constructor(private themesService: ThemesService) { }
 
+  // Méthode pour basculer l'abonnement d'un thème
   toggleSubscription(themeId: number): void {
     const theme = this.themes.find(t => t.id === themeId);
 

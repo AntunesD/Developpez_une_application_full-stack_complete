@@ -20,9 +20,10 @@ export class ArticleFormComponent {
   ) { }
 
   ngOnInit(): void {
-    this.loadThemes();
+    this.loadThemes(); // Chargement des thèmes au démarrage
   }
 
+  // Méthode pour récupérer la liste des thèmes
   private loadThemes(): void {
     this.themesService.getThemes().subscribe({
       next: (themes) => {
@@ -40,13 +41,15 @@ export class ArticleFormComponent {
     content: ''
   };
 
+  // Méthode pour créer un nouvel article
   createArticle() {
     if (!this.article.title || !this.article.content || !this.article.theme) {
       console.log('Tous les champs sont obligatoires.');
       return;
     }
     this.isSubmitting = true;
-    // Structure de la requête selon ton format
+
+    // Préparation des données de l'article
     const articleData = {
       title: this.article.title,
       content: this.article.content,
@@ -55,12 +58,13 @@ export class ArticleFormComponent {
       }
     };
 
+    // Envoi de la requête pour créer l'article
     this.articlesService.createArticle(articleData).subscribe({
       next: (createdArticle) => {
         console.log('Article créé avec succès :', createdArticle);
         this.showSuccessMessage = true;  // Afficher le message de succès
 
-        // Rediriger vers /articles après 3 secondes
+        // Rediriger vers la page des articles après 3 secondes
         setTimeout(() => {
           this.router.navigate(['/articles']);
         }, 3000);

@@ -18,6 +18,12 @@ public class JwtService {
 
   private final Key SECRET_KEY = Keys.hmacShaKeyFor("votre_clé_secrète_longue_et_sécurisée".getBytes());
 
+  /**
+   * Génère un token JWT pour un utilisateur donné.
+   * 
+   * @param user L'utilisateur pour lequel le token est généré
+   * @return Le token JWT généré
+   */
   public String generateToken(User user) {
     try {
       Date now = new Date();
@@ -39,6 +45,13 @@ public class JwtService {
     }
   }
 
+  /**
+   * Valide un token JWT et récupère le nom d'utilisateur.
+   * 
+   * @param token Le token JWT à valider
+   * @return Le nom d'utilisateur associé au token, ou null si le token est
+   *         invalide
+   */
   public String validateTokenAndGetUsername(String token) {
     try {
       SecretKey secretKey = Keys.hmacShaKeyFor("votre_clé_secrète_longue_et_sécurisée".getBytes());

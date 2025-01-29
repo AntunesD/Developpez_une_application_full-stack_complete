@@ -23,10 +23,12 @@ export class UserService {
     });
   }
 
+  // Méthode pour récupérer les informations de l'utilisateur
   getUser(): Observable<Profil> {
     return this.http.get<Profil>(this.apiUrl, { headers: this.getHeaders() });
   }
 
+  // Méthode pour mettre à jour les informations de l'utilisateur
   updateUser(username: string, email: string): Observable<AuthResponse> {
     const payload = {
       username,

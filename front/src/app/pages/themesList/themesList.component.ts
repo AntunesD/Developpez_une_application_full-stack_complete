@@ -15,6 +15,7 @@ export class ThemesComponent {
     this.loadThemes();
   }
 
+  // Méthode pour charger les thèmes
   private loadThemes(): void {
     this.themesService.getThemes().subscribe({
       next: (themes) => {

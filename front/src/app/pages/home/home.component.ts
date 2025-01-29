@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Méthodes pour rediriger vers les pages de connexion et d'inscription
   login() {
     this.router.navigate(['/login']);
   }

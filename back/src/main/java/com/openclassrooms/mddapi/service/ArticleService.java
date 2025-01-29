@@ -31,6 +31,11 @@ public class ArticleService {
   @Autowired
   private ThemeService themeService;
 
+  /**
+   * Récupère tous les articles sous forme de DTO.
+   * 
+   * @return Liste de ArticleDTO
+   */
   public List<ArticleDTO> getAllArticlesDto() {
     List<Article> articles = articleRepository.findAll();
     return articles.stream()
@@ -38,9 +43,16 @@ public class ArticleService {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Récupère un article par son ID et retourne un ArticleDTO.
+   * 
+   * @param id Identifiant de l'article
+   * @return ArticleDTO
+   */
   public ArticleDTO getArticleById(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Article non trouvé avec l'id : " + id));
+
     // Récupérer et ajouter le thème associé à l'article
     ThemeDTO themeDTO = themeService.getThemeById(article.getTheme().getId()); // Utilisation du ThemeService
 
@@ -55,6 +67,13 @@ public class ArticleService {
     return articleDTO;
   }
 
+  /**
+   * Crée un nouvel article à partir d'un DTO.
+   * 
+   * @param articleDTO Article à créer
+   * @param username   Nom d'utilisateur de l'auteur de l'article
+   * @return ArticleDTO
+   */
   public ArticleDTO createArticle(ArticleDTO articleDTO, String username) {
     Article article = convertToEntity(articleDTO, username);
 
@@ -68,6 +87,13 @@ public class ArticleService {
     return convertToDto(savedArticle);
   }
 
+  /**
+   * Met à jour un article existant.
+   * 
+   * @param id         ID de l'article à mettre à jour
+   * @param articleDTO Nouveau DTO de l'article
+   * @return ArticleDTO mis à jour
+   */
   public ArticleDTO updateArticle(Long id, ArticleDTO articleDTO) {
     Article existingArticle = articleRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Article non trouvé avec l'id : " + id));
@@ -77,7 +103,7 @@ public class ArticleService {
     existingArticle.setContent(articleDTO.getContent());
     // existingArticle.setTheme(articleDTO.getTheme());
 
-    // Si le user est modifiable dans l'articleDTO, on le met à jour
+    // Si l'utilisateur est modifiable dans l'articleDTO, on le met à jour
     if (articleDTO.getUser() != null) {
       User user = userRepository.findById(articleDTO.getUser().getId())
           .orElseThrow(
@@ -89,6 +115,11 @@ public class ArticleService {
     return convertToDto(updatedArticle);
   }
 
+  /**
+   * Supprime un article.
+   * 
+   * @param id ID de l'article à supprimer
+   */
   public void deleteArticle(Long id) {
     Article article = articleRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Article non trouvé avec l'id : " + id));
@@ -96,7 +127,10 @@ public class ArticleService {
   }
 
   /**
-   * Méthode pour convertir une entité Article en DTO ArticleDTO.
+   * Convertit une entité Article en DTO ArticleDTO.
+   * 
+   * @param article L'article à convertir
+   * @return ArticleDTO correspondant à l'article
    */
   private ArticleDTO convertToDto(Article article) {
     ArticleDTO dto = new ArticleDTO();
@@ -110,7 +144,6 @@ public class ArticleService {
       themeDto.setId(article.getTheme().getId());
       themeDto.setTitle(article.getTheme().getTitle());
       themeDto.setDescription(article.getTheme().getDescription());
-      // Ajouter d'autres champs nécessaires de Theme vers ThemeDTO
       dto.setTheme(themeDto);
     }
 
@@ -125,7 +158,11 @@ public class ArticleService {
   }
 
   /**
-   * Méthode pour convertir un DTO ArticleDTO en entité Article.
+   * Convertit un DTO ArticleDTO en entité Article.
+   * 
+   * @param dto      ArticleDTO à convertir
+   * @param username Nom d'utilisateur associé à l'article
+   * @return Article correspondant au DTO
    */
   private Article convertToEntity(ArticleDTO dto, String username) {
     Article article = new Article();

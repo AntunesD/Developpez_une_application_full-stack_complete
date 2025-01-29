@@ -22,6 +22,15 @@ public class UserService {
   @Autowired
   private JwtService jwtService;
 
+  /**
+   * Récupère le profil de l'utilisateur avec ses informations et ses thèmes
+   * abonnés.
+   * 
+   * @param username Le nom d'utilisateur de l'utilisateur dont on veut obtenir le
+   *                 profil
+   * @return Un objet UserProfilDTO contenant le profil de l'utilisateur
+   * @throws RuntimeException Si l'utilisateur n'est pas trouvé
+   */
   public UserProfilDTO getUserProfile(String username) {
     User user = userRepository.findByUsername(username);
     if (user == null) {
@@ -46,6 +55,16 @@ public class UserService {
     return new UserProfilDTO(user.getUsername(), user.getEmail(), themeDTOs);
   }
 
+  /**
+   * Met à jour le profil de l'utilisateur avec les informations reçues dans le
+   * DTO.
+   * 
+   * @param username Le nom d'utilisateur de l'utilisateur à mettre à jour
+   * @param userDTO  Le DTO contenant les nouvelles informations de l'utilisateur
+   * @return Un objet AuthResponseDto avec les détails de la modification et le
+   *         token JWT
+   * @throws RuntimeException Si l'utilisateur n'est pas trouvé
+   */
   public AuthResponseDto updateUserProfile(String username, UserDTO userDTO) {
     User user = userRepository.findByUsername(username);
 
